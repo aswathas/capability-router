@@ -24,6 +24,9 @@ Permanent context cost of this plugin: **zero**.
 | Regression checks | 35, all passing |
 | Bugs found and fixed during the build | 6, including one that failed silently |
 
+Write-up published on LinkedIn:
+[1,454 SKILL.md files, 372 capabilities, 0 tokens of permanent context](https://www.linkedin.com/feed/update/urn:li:share:7523850680181342208/)
+
 ## Documentation
 
 Full documentation, written from scratch, is in [docs/](docs/README.md).
