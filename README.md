@@ -13,6 +13,37 @@ It is a **hook**, not an MCP server. That is deliberate:
 
 Permanent context cost of this plugin: **zero**.
 
+## Numbers
+
+| | |
+|---|---|
+| Capabilities catalogued | 372 (321 skills, 16 MCP tools, 17 connector tools, 18 CLI services) |
+| Permanent context cost | 0 tokens |
+| Injected line | about 25 tokens, only on a firing turn |
+| Hook latency | about 290 ms, including process start |
+| Regression checks | 35, all passing |
+| Bugs found and fixed during the build | 6, including one that failed silently |
+
+## Documentation
+
+Full documentation, written from scratch, is in [docs/](docs/README.md).
+
+| Document | What it answers |
+|---|---|
+| [architecture.md](docs/architecture.md) | What it is, how it routes, what it costs. |
+| [runtime-research.md](docs/runtime-research.md) | What was reverse engineered from the agent runtime before any code was written. |
+| [build-log.md](docs/build-log.md) | The chronological build: decisions, dead ends, what changed. |
+| [bugs-found.md](docs/bugs-found.md) | The six bugs, with symptom, cause, and how each was caught. |
+| [antifragility.md](docs/antifragility.md) | The four guards and the confidence arithmetic. |
+| [operations.md](docs/operations.md) | Install, rebuild, troubleshoot, extend, port. |
+| [testing.md](docs/testing.md) | The suite, what it covers, what it does not. |
+| [appendix-whatsapp-mcp.md](docs/appendix-whatsapp-mcp.md) | The case study that came first: a daemon that would not start. |
+
+The original design spec, written before any code, is at
+[docs/superpowers/specs/](docs/superpowers/specs/2026-11-05-capability-router-design.md).
+Its "Implementation notes" section records every place the build proved the
+design wrong, which is the most useful part of the project.
+
 ## What it does
 
 | Trigger | What happens |
