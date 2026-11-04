@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -33,7 +34,7 @@ TEXT = "#E8ECF2"
 MUTE = "#8A94A6"
 HAIR = "#252B38"
 
-BRAND = "@aswathas"
+BRAND = os.environ.get("IG_BRAND", "@aswathas")
 REPO = "github.com/aswathas/capability-router"
 
 
@@ -246,18 +247,18 @@ def build_slides(d: dict) -> list:
 
 
 def caption(d: dict) -> str:
+    bullets = []
+    for label, value in d["ledger"]:
+        if label.endswith("name + description only"):
+            bullets.append(f"- {label.split(',')[0]}: name + description only")
+        else:
+            bullets.append(f"- {label.replace(' (WhatsApp)', '')}: {value:,}")
+    ledger_text = "\n".join(bullets)
     return f"""I measured what my agent's context actually costs. Then I got greedy and made most of it free.
 
 Full ledger, every line item, nothing rounded:
 
-- {d['skill_count']} skill name + description pairs: {d['skill_tokens']:,}
-- 16 MCP tool schemas: {d['mcp_tokens']:,}
-- {d['connector_count']} connector tools: name + description only
-- linkedin hook block: 716
-- whatsapp hook block: 319
-- session bootstrap block: 289
-- caveman hook block: 206
-- router injection, one firing turn: 38
+{ledger_text}
 
 Total: {d['total']:,} tokens before we say a word.
 
