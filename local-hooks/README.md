@@ -1,6 +1,6 @@
 # Local hooks
 
-Two user scope hooks that ship alongside this plugin on the machine it was
+User scope hooks that ship alongside this plugin on the machine it was
 built on. They live in `%USERPROFILE%\.minimax\`, not inside the plugin,
 because they are not part of the router. They are the machine's own setup.
 
@@ -10,6 +10,7 @@ Copies are here so the source travels with the project. **These files in
 ```sh
 Copy-Item ".\session-bootstrap-hook.ps1" "$env:USERPROFILE\.minimax\session-bootstrap-hook.ps1" -Force
 Copy-Item ".\linkedin-hook.ps1"         "$env:USERPROFILE\.minimax\linkedin-hook.ps1" -Force
+Copy-Item ".\karthick-hook.ps1"         "$env:USERPROFILE\.minimax\karthick-hook.ps1" -Force
 ```
 
 ## session-bootstrap-hook
@@ -46,9 +47,30 @@ It carries the parts that are easy to get wrong:
 
 It injects context only. It never posts anything by itself.
 
+## karthick-hook
+
+Event: `UserPromptSubmit`. Fires when a prompt names Karthick Raja M and
+injects who he is and which of his repos matter for this machine.
+
+It carries:
+
+- GitHub `karthyick`, Lead AI/ML Engineer at Appian, Chennai, 8 PyPI packages.
+- The repos worth reading before guessing: `context-rainbow` (colour aware
+  context routing), `clinotes` (git native project memory for agents),
+  `DISTILL` (lossless JSON compression for LLMs), `prompt-cache`,
+  `CodebaseVisualizer`, `CodeAuditor`.
+- The shared work: collaborator on `aswathas/instagram-mcp-logs`, the
+  AiChargeLabs Instagram MCP bug bundle, and the one line summary of that bug.
+- The rules: read his repos with `gh` before guessing, never write to his
+  repositories or send anything to him without the user asking in that same
+  request, never invent commits or quotes from him, and compare the capability
+  router against `context-rainbow` instead of assuming they are the same thing.
+
+It injects context only. It never writes to GitHub and never sends mail.
+
 ## Registration
 
-Both are registered in `%USERPROFILE%\.minimax\hooks.json`:
+All three are registered in `%USERPROFILE%\.minimax\hooks.json`:
 
 ```json
 "SessionStart": [
@@ -72,6 +94,13 @@ Both are registered in `%USERPROFILE%\.minimax\hooks.json`:
         "name": "Route LinkedIn prompts to the cli-anything-linkedin CLI",
         "command": "sh \"$HOME/.minimax/linkedin-hook.sh\"",
         "commandWindows": "powershell.exe -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File \"C:\\Users\\ADMIN\\.minimax\\linkedin-hook.ps1\"",
+        "timeout": 5
+      },
+      {
+        "type": "command",
+        "name": "Surface Karthick Raja M and his work when the name appears",
+        "command": "sh \"$HOME/.minimax/karthick-hook.sh\"",
+        "commandWindows": "powershell.exe -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File \"C:\\Users\\ADMIN\\.minimax\\karthick-hook.ps1\"",
         "timeout": 5
       }
     ]
