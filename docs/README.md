@@ -14,6 +14,7 @@ Read in this order if you are new. Skip to what you need if you are not.
 | [operations.md](operations.md) | Install, rebuild the catalog, troubleshoot, extend, port to another runtime. |
 | [testing.md](testing.md) | The test suite, what it covers, and how to add a case. |
 | [appendix-whatsapp-mcp.md](appendix-whatsapp-mcp.md) | The case study that came first: a daemon that would not start. |
+| [instagram-publishing.md](instagram-publishing.md) | How the carousel was measured, rendered and posted, and what the Instagram MCP needed before the first post. |
 
 The original design spec, written before any code, is kept unmodified at
 [superpowers/specs/2026-11-05-capability-router-design.md](superpowers/specs/2026-11-05-capability-router-design.md).

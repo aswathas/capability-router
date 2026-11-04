@@ -41,6 +41,7 @@ Full documentation, written from scratch, is in [docs/](docs/README.md).
 | [operations.md](docs/operations.md) | Install, rebuild, troubleshoot, extend, port. |
 | [testing.md](docs/testing.md) | The suite, what it covers, what it does not. |
 | [appendix-whatsapp-mcp.md](docs/appendix-whatsapp-mcp.md) | The case study that came first: a daemon that would not start. |
+| [instagram-publishing.md](docs/instagram-publishing.md) | How the carousel was measured, rendered and posted, and what the Instagram MCP needed before the first post. |
 
 The original design spec, written before any code, is at
 [docs/superpowers/specs/](docs/superpowers/specs/2026-11-05-capability-router-design.md).
@@ -72,6 +73,8 @@ It never touches `ai_enabled`, a permission, or a send gate.
   scripts/router.sh               POSIX launcher, passes stdin through
   scripts/build_catalog.py        rebuilds the catalog
   scripts/test_router.py          regression tests
+  scripts/measure_context.py      measures what the setup costs in prompt tokens
+  content/instagram/              carousel build and publish scripts
   docs/superpowers/specs/         the design spec
 ```
 

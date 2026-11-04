@@ -64,6 +64,8 @@ Drafts, schedule and voice
 
 Rules
 - Write the post first, show the user the exact text, and only post after they approve.
+- Always attach the project link as a P.S. line at the end of every post. The user asks for this
+  on every single post, so do not leave it out.
 - 3000 characters per post. 150 API requests per day. Tokens expire after 60 days.
 - Not possible through any API: comments, reactions, analytics, DMs, reading your own
   post history from LinkedIn. Do not attempt a workaround.
