@@ -1,0 +1,18 @@
+{
+  "enabled": true,
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "name": "Capability router",
+            "command": "sh \"C:/Users/ADMIN/.minimax/plugins/capability-router/scripts/router.sh\"",
+            "commandWindows": "powershell.exe -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File \"C:\\Users\\ADMIN\\.minimax\\plugins\\capability-router\\scripts\\router.ps1\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}

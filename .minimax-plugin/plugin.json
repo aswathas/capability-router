@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "name": "capability-router",
+  "displayName": "Capability Router",
+  "version": "1.0.0",
+  "description": "Routes a prompt to the right skill, MCP tool, plugin or CLI. Resolves slash commands exactly, applies learned routing rules, and learns from corrections. Injects context only. Never calls a tool.",
+  "author": "User",
+  "icon": "icon.png",
+  "category": "Tools",
+  "exampleQueries": [
+    "/ponytail",
+    "/whatsapp-mcp show unread chats",
+    "route my request to the right capability"
+  ],
+  "apps": [],
+  "mcpServers": [],
+  "skills": [],
+  "hooks": [
+    "hooks/router.json"
+  ]
+}
