@@ -66,6 +66,70 @@ If Instagram answers with a challenge, approve it in the Instagram app and run
 The session lands in `%APPDATA%\instagram-mcp\`, encrypted with DPAPI. It
 cannot be copied to another machine.
 
+### Password login is broken in 0.2.1
+
+The password path crashes before Instagram ever asks for a 2FA code:
+
+```
+File "instagrapi\mixins\password.py", line 40, in password_publickeys
+TypeError: int() argument must be a string, a bytes-like object or a real number, not 'NoneType'
+[PYI-XXXXX:ERROR] Failed to execute script 'ig_daemon' due to unhandled exception!
+```
+
+The cause is not 2FA, and not the password.
+
+`instagrapi` 3.2.1 fetches the password-encryption key from
+`https://i.instagram.com/api/v1/qe/sync/` and reads two response headers,
+`ig-set-password-encryption-key-id` and `ig-set-password-encryption-pub-key`.
+**Instagram deleted that endpoint.** It answers 404 now, and the 404 response
+carries neither header, so `int(None)` throws and the whole login dies.
+
+The key headers are still served, from a different path:
+
+```
+GET https://i.instagram.com/api/v1/accounts/login/   -> 405, but with
+    ig-set-password-encryption-key-id: 189
+    ig-set-password-encryption-pub-key: LS0tLS1CRUdJTiBQVUJMSUMgS0VZ...
+```
+
+### Patching the source does nothing
+
+The obvious fix is to edit `password_publickeys` and add the second URL as a
+fallback. It has no effect, for a reason worth knowing.
+
+`ig_daemon.exe` is a PyInstaller build. It ships `instagrapi` twice: as source
+under `_internal\instagrapi\`, and as bytecode inside the frozen archive in the
+executable. The frozen importer sits at the front of `sys.meta_path`, so it
+wins. The traceback proves it: the frame reads
+`File "instagrapi\mixins\password.py"`, a relative path, while a file loaded
+from `_internal` would print its full absolute path.
+
+Editing `_internal\instagrapi\mixins\password.py` changes nothing, and the
+shipped `__pycache__` is not the reason. That `.pyc` is timestamp-based and
+already stale against the edited source, so Python would happily recompile it.
+The file is simply never read.
+
+Fixing it properly means rewriting the module inside the frozen archive, which
+means repacking the executable. That is a maintenance burden on every
+upgrade, and it is the vendor's call, not ours.
+
+### What works instead
+
+The CLI ships a route that skips password encryption entirely:
+
+```
+instagram-mcp.exe login --sessionid-env IG_SESSIONID
+```
+
+It reuses a browser session cookie. Sign in to instagram.com in a browser,
+read the `sessionid` cookie, and hand it over. No password is encrypted, no
+key endpoint is touched, and no 2FA prompt from the tool is needed, because
+Instagram's own sign-in page already handled it.
+
+On Windows the cookie can be pulled straight out of the browser profile: the
+cookie database is SQLite, the value column is DPAPI-protected for the logged
+in user, and `CryptUnprotectData` unwraps it in the same user context.
+
 ## Publish
 
 ```
