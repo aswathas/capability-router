@@ -1,0 +1,14 @@
+{
+  "name": "capability-router",
+  "owner": {
+    "name": "aswathas",
+    "url": "https://github.com/aswathas"
+  },
+  "plugins": [
+    {
+      "name": "capability-router",
+      "source": "./",
+      "description": "Zero-context-cost capability router for AI agents."
+    }
+  ]
+}
