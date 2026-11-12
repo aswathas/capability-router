@@ -1,0 +1,13 @@
+{
+  "name": "capability-router",
+  "description": "Zero-context-cost capability router for AI agents.",
+  "version": "1.0.0",
+  "author": {
+    "name": "aswathas",
+    "url": "https://github.com/aswathas"
+  },
+  "homepage": "https://github.com/aswathas/capability-router",
+  "repository": "https://github.com/aswathas/capability-router",
+  "license": "MIT",
+  "hooks": "./hooks/router.json"
+}
